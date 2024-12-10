@@ -1,9 +1,6 @@
-import { useEffect, useState } from "react";
 import HeaderInfosContent from "./HeaderInfosContent"
 
 export default function HeaderInfos({informations}){
-
-// 206.71.50.230
 
     const infomationsContet = [
         {title: 'Ip Adress', result: `${informations?.ip}`},
@@ -12,8 +9,12 @@ export default function HeaderInfos({informations}){
         {title: 'Isp', result: `${informations?.org}`},
     ]
 
+    infomationsContet.filter((word) => 
+        word.result == 'undefined' || word.result == 'undefined, undefined undefined' ? word.result = '' : word.result    
+    )
+
     return(
-        <div className="-mb-20 bg-white p-8 shadow-2xl w-9/12 flex justify-center items-center rounded-xl z-0">
+        <div className="-mb-20 bg-white p-8 shadow-2xl max-w-screen-xl h-auto flex justify-center items-center rounded-xl z-0">
             {infomationsContet.map((item, index)=>(
                 <HeaderInfosContent key={index} title={item.title} result={item.result}  />
             ))}
