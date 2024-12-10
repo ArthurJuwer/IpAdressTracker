@@ -3,16 +3,29 @@ import HeaderInfos from "./HeaderInfos";
 import { useState } from "react";
 
  export default function Header(){
-
     const [valueInput, setValueInput] = useState('')
-    const [passIP, setPassIP] = useState('')
+    const [data, setData] = useState([]);
 
     const verificationInformations = () => {
-        // if(valueInput.trim().length !== 12){
-        //     alert("Verifique se tem + de 12 numeros e Coloque a pontuação certinha")
-        // } else {
-            setPassIP(valueInput)
-        // }
+        apiRequest()
+    }
+    async function apiRequest() {
+        const url = `https://user-ip-data-rest-api.p.rapidapi.com/?ip=${valueInput}`;
+        const options = {
+            method: 'GET',
+            headers: {
+                'x-rapidapi-key': 'bacd4ec191msh319a7d2444f2392p134885jsn257cae2e51f5',
+                'x-rapidapi-host': 'user-ip-data-rest-api.p.rapidapi.com'
+            }
+        };
+
+        try {
+            const response = await fetch(url, options);
+            const result = await response.json();
+            setData(result);
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     return(
@@ -37,7 +50,7 @@ import { useState } from "react";
                         </button>
                     </div>
                 </div>
-                <HeaderInfos passIP={passIP} />
+                <HeaderInfos informations={data} />
             </div>
             
         </div>
